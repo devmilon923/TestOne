@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 const app = express();
+const userRoute = require("./routes/userRoute");
 app.use(express.urlencoded({ extended: false }));
 mongoose
   .connect(
@@ -10,9 +11,8 @@ mongoose
   .then(() => console.log("DB connect"))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.end("Hello from server");
-});
+app.use("/auth", userRoute);
+
 app.post("/create", async (req, res) => {
   console.log(req.body);
   try {
